@@ -40,5 +40,5 @@ The \code{level} upper confidence bound
 Helper Function to Calculate Linear Program Upper Confidence Bound on Ideal Rule Benefit
 }
 \examples{
-#tbc
+#this is an internal function
 }

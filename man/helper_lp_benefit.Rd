@@ -24,5 +24,5 @@ the estimated benefit of the ideal treatment rule over the best uniform treatmen
 Helper Function to Calculate Linear Program Bound on Ideal Rule Benefit
 }
 \examples{
-#tbc
+#this is an internal function
 }

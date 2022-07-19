@@ -7,9 +7,7 @@
 #'
 #' @return a list of the new range, new mean of the better arm, and new mean of the worse arm
 #'
-#' @examples
-#' transform_range(1:10,4,6,scale = "higher")
-#' transform_range(-1*(1:10),-4,-6,scale = "lower")
+#' @examples #this is an internal function
 transform_range <- function(y_range,
                             mean_worse,
                             mean_better,
@@ -170,7 +168,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
 #'
 #' @return the estimated benefit of the ideal treatment rule over the best uniform treatment
 #'
-#' @examples #tbc
+#' @examples #this is an internal function
 helper_lp_benefit <- function(y_range,
                               mean_worse,
                               mean_better,
@@ -237,7 +235,7 @@ helper_lp_benefit <- function(y_range,
 #' @return The `level` upper confidence bound
 #' @export
 #'
-#' @examples #tbc
+#' @examples #this is an internal function
 helper_lp_ci <- function(y_range,
                          mean_worse,
                          mean_better,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/lp_ideal_rule_benefit_bounds.R
 \name{transform_range}
 \alias{transform_range}
-\title{Helper Function to Transform Outcome Scale to Positive with Higher Outcomes Beneficial}
+\title{Helper Function to Transform Outcome}
 \usage{
 transform_range(y_range, mean_worse, mean_better, scale)
 }
@@ -19,9 +19,8 @@ transform_range(y_range, mean_worse, mean_better, scale)
 a list of the new range, new mean of the better arm, and new mean of the worse arm
 }
 \description{
-Helper Function to Transform Outcome Scale to Positive with Higher Outcomes Beneficial
+Helper Function to Transform Outcome
 }
 \examples{
-transform_range(1:10,4,6,scale = "higher")
-transform_range(-1*(1:10),-4,-6,scale = "lower")
+#this is an internal function
 }
