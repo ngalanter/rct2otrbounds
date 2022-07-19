@@ -1,0 +1,20 @@
+---
+title: "rct2otrbounds"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rct2otrbounds}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(rct2otrbounds)
+```
+
