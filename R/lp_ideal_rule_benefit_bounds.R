@@ -1,4 +1,4 @@
-#' Helper Function to Transform Outcome Scale to Positive with Higher Outcomes Beneficial
+#' Helper Function to Transform Outcome
 #'
 #' @param y_range the range of outcomes
 #' @param mean_worse mean of the worse treatment arm
@@ -7,14 +7,15 @@
 #'
 #' @return a list of the new range, new mean of the better arm, and new mean of the worse arm
 #'
-#' @examples #tbc
+#' @examples
+#' transform_range(1:10,4,6,scale = "higher")
+#' transform_range(-1*(1:10),-4,-6,scale = "lower")
 transform_range <- function(y_range,
                             mean_worse,
                             mean_better,
                             scale){
 
-  #flip outcome scale if lower outcomes are better
-
+  #flip outcome scale if lower outcomes are better, transform range to start at 0
   if(scale == "lower"){
 
     new_y_range <- -1*y_range + max(y_range)
@@ -85,10 +86,12 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
     if(m >= M) stop("m must be less than M")
 
+    #if lower and upper bounds are specified, create range based on those
     y_range <- m:M
 
   }
 
+  #assign which arms are worse or better based on scale
   if((scale == "lower" & mean_1 <= mean_0) | (scale == "higher" & mean_1 >= mean_0)){
 
     mean_better <- mean_1
@@ -111,6 +114,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
   }
 
+  #transform the range to be nonnegative with higher outcomes beneficial
   temp <- transform_range (y_range,
                            mean_worse,
                            mean_better,
@@ -129,6 +133,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
     }
 
+    #get upper confidence bound
     ci.upper <- helper_lp_ci(y_range = new_y_range,
                                new_mean_worse,
                                new_mean_better,
@@ -141,6 +146,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
   } else {ci.upper <- NULL}
 
+  #get bound estimate
   bound <- helper_lp_benefit(y_range = new_y_range,
                              new_mean_worse,
                              new_mean_better,

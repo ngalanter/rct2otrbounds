@@ -22,5 +22,6 @@ a list of the new range, new mean of the better arm, and new mean of the worse a
 Helper Function to Transform Outcome Scale to Positive with Higher Outcomes Beneficial
 }
 \examples{
-#tbc
+transform_range(1:10,4,6,scale = "higher")
+transform_range(-1*(1:10),-4,-6,scale = "lower")
 }
