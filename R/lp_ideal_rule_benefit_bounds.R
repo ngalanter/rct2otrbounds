@@ -98,7 +98,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
     }
 
-    conf.upper <- helper_lp_ci(y_range = new_y_range,
+    ci.upper <- helper_lp_ci(y_range = new_y_range,
                                new_mean_worse,
                                new_mean_better,
                                var_worse,
@@ -108,7 +108,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
                                level = level)
 
 
-  } else {conf.upper <- NULL}
+  } else {ci.upper <- NULL}
 
   bound <- helper_lp_benefit(y_range = new_y_range,
                              new_mean_worse,
@@ -116,7 +116,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
                              var_worse,
                              var_better)
 
-  return(list(estimate = bound, conf.upper = conf.upper))
+  return(list(estimate = bound, conf.upper = ci.upper))
 
 
 }
@@ -264,5 +264,7 @@ helper_lp_ci <- function(y_range,
      const.rhs = const.rhs)
 
 }
+
+
 
 
