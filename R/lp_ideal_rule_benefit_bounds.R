@@ -1,3 +1,39 @@
+#' Helper Function to Transform Outcome Scale to Positive with Higher Outcomes Beneficial
+#'
+#' @param y_range the range of outcomes
+#' @param mean_worse mean of the worse treatment arm
+#' @param mean_better mean of the better treatment arm
+#' @param scale whether "higher" or "lower" outcomes are better
+#'
+#' @return a list of the new range, new mean of the better arm, and new mean of the worse arm
+#'
+#' @examples #tbc
+transform_range <- function(y_range,
+                            mean_worse,
+                            mean_better,
+                            scale){
+
+  #flip outcome scale if lower outcomes are better
+
+  if(scale == "lower"){
+
+    new_y_range <- -1*y_range + max(y_range)
+    new_mean_worse <- max(y_range) - mean_worse
+    new_mean_better <- max(y_range) - mean_better
+
+  } else{
+
+    new_y_range <- y_range - min(y_range)
+    new_mean_worse <- mean_worse - min(y_range)
+    new_mean_better <- mean_better - min(y_range)
+
+  }
+
+  return(list(new_y_range = new_y_range,
+              new_mean_worse = new_mean_worse,
+              new_mean_better = new_mean_better))
+}
+
 #' Linear Programming Bound on the Ideal Rule Benefit
 #'
 #' @param scale Scale should be "higher" (default) if higher outcomes are beneficial,
@@ -75,20 +111,15 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
   }
 
-  #flip outcome scale if lower outcomes are better
-  if(scale == "lower"){
+  temp <- transform_range (y_range,
+                           mean_worse,
+                           mean_better,
+                           scale)
 
-    new_y_range <- -1*y_range + max(y_range)
-    new_mean_worse <- max(y_range) - mean_worse
-    new_mean_better <- max(y_range) - mean_better
+  new_y_range <- temp$new_y_range
+  new_mean_worse <- temp$new_mean_worse
+  new_mean_better <- temp$new_mean_better
 
-  } else{
-
-    new_y_range <- y_range - min(y_range)
-    new_mean_worse <- mean_worse - min(y_range)
-    new_mean_better <- mean_better - min(y_range)
-
-  }
 
   if(conf.upper){
 
@@ -264,6 +295,7 @@ helper_lp_ci <- function(y_range,
      const.rhs = const.rhs)
 
 }
+
 
 
 

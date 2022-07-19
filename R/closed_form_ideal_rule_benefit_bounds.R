@@ -34,7 +34,7 @@ closed_form_ideal_rule_benefit <- function(s2_1,
     if (m >= M) stop("For bounded outcomes, m must be less than M")
 
   } else{
-    if (conf.int)
+    if (conf.upper)
       warning("No confidence interval can be provided for unbounded outcomes")
   }
 
