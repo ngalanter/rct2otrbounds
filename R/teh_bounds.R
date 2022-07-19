@@ -36,12 +36,12 @@ teh_closed_form_bounded <-
   {
     #calculating the upper and lower bounds on treatment effect heterogeneity for bounded outcomes
     point_low <- s2_1 + s2_0 - 2 * min(sqrt(s2_1) * sqrt(s2_0),
-                                       (M - mean_1) * (M - mean_0),
-                                       (mean_1 - m) * (mean_0 - m))
+                                       (mean_1 - m) * (M - mean_0),
+                                       (M - mean_1) * (mean_0 - m))
 
     point_high <- s2_1 + s2_0 + 2 * min(sqrt(s2_1) * sqrt(s2_0),
-                                        (M - mean_1) * (mean_0 - m),
-                                        (mean_1 - m) * (M - mean_0))
+                                        (M - mean_1) * (M - mean_0),
+                                        (mean_1 - m) * (mean_0 - m))
 
 
     if (conf.int) {
