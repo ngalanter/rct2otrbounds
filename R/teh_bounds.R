@@ -9,7 +9,7 @@
 #' @param mean_1 mean outcome of the treatment group
 #' @param mean_0 mean outcome of the control group
 #' @param conf.int whether a confidence interval is generated
-#' @param level confidence level between 0 and 1 for confidence interval
+#' @param level confidence level between 0 and 1 for confidence interval;
 #'     default is 0.95
 #'
 #' @returns

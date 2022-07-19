@@ -33,7 +33,7 @@ treatment_effect_heterogeneity_bound(
 
 \item{m, M}{two real numbers defining the outcome range with \code{m}<\code{M}}
 
-\item{level}{confidence level between 0 and 1 for confidence interval
+\item{level}{confidence level between 0 and 1 for confidence interval;
 default is 0.95}
 
 \item{bounded_outcome}{logical; \code{TRUE} if the outcome is bounded and \code{FALSE} otherwise,

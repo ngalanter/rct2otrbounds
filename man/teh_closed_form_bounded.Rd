@@ -34,7 +34,7 @@ teh_closed_form_bounded(
 
 \item{conf.int}{whether a confidence interval is generated}
 
-\item{level}{confidence level between 0 and 1 for confidence interval
+\item{level}{confidence level between 0 and 1 for confidence interval;
 default is 0.95}
 }
 \value{

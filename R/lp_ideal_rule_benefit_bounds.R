@@ -3,6 +3,12 @@
 #' @param scale Scale should be "higher" (default) if higher outcomes are beneficial,
 #'     and "lower" otherwise
 #' @param conf.upper logical; whether a upper confidence bound should be provided
+#' @param y_range the range of possible outcome values. either this or both m and M should be specified
+#'    if m,M are specified this should be left as `NULL`
+#' @param m,M the upper and lower bounds on the outcome range.
+#'    Specifying these assumes a range of all integer values between and including m and M.
+#'    Either m,M or y_range should be specified.
+#'    If y_range is specified m,M should be left as `NULL`.
 #' @inheritParams teh_closed_form_bounded
 #'
 #'
@@ -92,7 +98,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
     }
 
-    conf.upper <- helper_lp_ci(y_range = new_m:new_M,
+    conf.upper <- helper_lp_ci(y_range = new_y_range,
                                new_mean_worse,
                                new_mean_better,
                                var_worse,
@@ -104,7 +110,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
   } else {conf.upper <- NULL}
 
-  bound <- helper_lp_benefit(y_range = new_m:new_M,
+  bound <- helper_lp_benefit(y_range = new_y_range,
                              new_mean_worse,
                              new_mean_better,
                              var_worse,
@@ -177,7 +183,7 @@ helper_lp_benefit <- function(y_range,
 #'     default is 0.95
 #' @inheritParams helper_lp_benefit
 #'
-#' @return
+#' @return The `level` upper confidence bound
 #' @export
 #'
 #' @examples #tbc
