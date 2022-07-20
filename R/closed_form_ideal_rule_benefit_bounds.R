@@ -3,6 +3,7 @@
 #' @param bounded_outcome logical; `TRUE` if the outcome is bounded and `FALSE` otherwise,
 #'     default is `FALSE`
 #' @param conf.upper logical; whether a upper confidence bound should be provided
+#' @param binary_outcome logical; whether the outcome is binary
 #' @inheritParams teh_closed_form_bounded
 #'
 #' @returns
@@ -23,40 +24,59 @@ closed_form_ideal_rule_benefit <- function(s2_1,
                                            m = NULL,
                                            M = NULL,
                                            level = 0.95,
-                                           bounded_outcome = F,
-                                           conf.upper = F)
+                                           bounded_outcome = FALSE,
+                                           binary_outcome = FALSE,
+                                           conf.upper = FALSE)
 {
-  if (bounded_outcome) {
-    if (is.null(m) | is.null(M)) {
-      stop("For bounded outcomes, bounds must be given by the m and M arguments")
+  #if outcome is binary return binary bound
+  if (binary_outcome) {
+    if (mean_1 > mean_0) {
+
+      estimate <- min(mean_0, 1 - mean_1)
+
+    } else{
+      estimate <- min(mean_1, 1 - mean_0)
+
     }
 
-    if (m >= M)
-      stop("For bounded outcomes, m must be less than M")
+  } else { #otherwise return bounded or general bound
+    if (bounded_outcome) {
+      if (is.null(m) | is.null(M)) {
+        stop("For bounded outcomes, bounds must be given by the m and M arguments")
+      }
 
-  } else{
-    if (conf.upper)
-      warning("No confidence interval can be provided for unbounded outcomes")
+      if (m >= M)
+        stop("For bounded outcomes, m must be less than M")
+
+    } else{
+      if (conf.upper)
+        warning("No confidence interval can be provided for unbounded outcomes")
+    }
+
+    #get upper bound on treatment effect heterogeneity
+    teh_bound <- treatment_effect_heterogeneity_bound(
+      s2_1 = s2_1,
+      s2_0 = s2_0,
+      n_1 = n_1,
+      n_0 = n_0,
+      mean_1 = mean_1,
+      mean_0 = mean_0,
+      m = m,
+      M = M,
+      bounded_outcome = bounded_outcome,
+      conf.int = FALSE
+    )$estimates[2]
+
+    #get point estimate of upper bound on ideal treatment rule benefit
+    estimate <- 0.5 * sqrt(teh_bound + (mean_1 - mean_0) ^ 2)
   }
+  if (conf.upper & (bounded_outcome | binary_outcome)) {
+    #if the outcome is binary, set bounds at 0 and 1
+    if (binary_outcome) {
+      m <- 0
+      M <- 1
+    }
 
-  #get upper bound on treatment effect heterogeneity
-  teh_bound <- treatment_effect_heterogeneity_bound(
-    s2_1 = s2_1,
-    s2_0 = s2_0,
-    n_1 = n_1,
-    n_0 = n_0,
-    mean_1 = mean_1,
-    mean_0 = mean_0,
-    m = m,
-    M = M,
-    bounded_outcome = bounded_outcome,
-    conf.int = FALSE
-  )$estimates[2]
-
-  #get point estimate of upper bound on ideal treatment rule benefit
-  estimate <- 0.5 * sqrt(teh_bound + (mean_1 - mean_0) ^ 2)
-
-  if (conf.upper & bounded_outcome) {
     #total sample size
     n <- n_1 + n_0
 
@@ -80,7 +100,8 @@ closed_form_ideal_rule_benefit <- function(s2_1,
     point <- 1 / 2 * sqrt(s2_0 * (nu_hat + 1) ^ 2 + mean_delta ^ 2)
 
     #bound on the variance of the point estimate
-    var <- (16 * (s2_0 * (nu_hat + 1) ^ 2 + mean_delta ^ 2)) ^ (-1) *
+    var <-
+      (16 * (s2_0 * (nu_hat + 1) ^ 2 + mean_delta ^ 2)) ^ (-1) *
       (
         (max_sqdev_1 * s2_1 - s2_1 ^ 2) * (nu_hat ^ (-1) + 1) ^ 2 / r_1 +
           (max_sqdev_0 * s2_0 - s2_0 ^ 2) * (nu_hat + 1) ^ 2 / r_0 +
@@ -94,7 +115,8 @@ closed_form_ideal_rule_benefit <- function(s2_1,
     q_high = 0.5 + level / 2
 
     #upper confidence bound at the specified level
-    ci.upper <- stats::qnorm(q_high, mean = point, sd = sqrt(var / n))
+    ci.upper <-
+      stats::qnorm(q_high, mean = point, sd = sqrt(var / n))
 
   } else {
     ci.upper <- NULL
