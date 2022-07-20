@@ -90,7 +90,7 @@ subpop_ideal_rule_benefits <- function(s2_1,
 
   ci.upper <- stats::qnorm(q_high, mean = estimates, sd = sqrt(var/n))
 
-  return(estimates = estimates, conf.upper = ci.upper)
+  return(list(estimates = estimates, conf.upper = ci.upper))
 
 }
 

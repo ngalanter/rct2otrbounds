@@ -22,8 +22,8 @@ library(rct2otrbounds)
 treatment_effect_heterogeneity_bound(
   s2_1 = 6.53,
   s2_0 = 7.52,
-  n_1 = NULL,
-  n_0 = NULL,
+  n_1 = 114,
+  n_0 = 126,
   mean_1 = 10.73,
   mean_0 = 11.94,
   m = 0,
@@ -34,11 +34,15 @@ treatment_effect_heterogeneity_bound(
 )
 
 
+```
+
+```{r}
+
 closed_form_ideal_rule_benefit(
   s2_1 = 6.53,
   s2_0 = 7.52,
-  n_1 = NULL,
-  n_0 = NULL,
+  n_1 = 114,
+  n_0 = 126,
   mean_1 = 10.73,
   mean_0 = 11.94,
   m = 0,
@@ -48,27 +52,33 @@ closed_form_ideal_rule_benefit(
   conf.upper = TRUE
 )
 
+```
+
+```{r}
 
 lp_ideal_rule_benefit(
   s2_1 = 6.53,
   s2_0 = 7.52,
-  n_1 = NULL,
-  n_0 = NULL,
+  n_1 = 114,
+  n_0 = 126,
   mean_1 = 10.73,
   mean_0 = 11.94,
   m = 0,
   M = 52,
   level = 0.95,
-  bounded_outcome = TRUE,
   conf.upper = TRUE,
   scale = "lower"
 )
 
+```
+
+```{r}
+
 plot_ideal_rule_benefits(
     s2_1 = 6.53,
   s2_0 = 7.52,
-  n_1 = NULL,
-  n_0 = NULL,
+  n_1 = 114,
+  n_0 = 126,
   mean_1 = 10.73,
   mean_0 = 11.94,
   m = 0,
