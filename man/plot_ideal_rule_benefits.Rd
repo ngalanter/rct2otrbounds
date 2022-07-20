@@ -64,5 +64,5 @@ A list with two elements:
 Plot rule benefit bounds for subpopulation containing all treatment effect heterogeneity.
 }
 \examples{
-#tbd
+#tbc
 }
