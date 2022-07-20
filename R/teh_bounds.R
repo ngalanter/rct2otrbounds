@@ -1,5 +1,6 @@
 
 
+
 #' Closed Form Treatment Effect Heterogeneity Bound for Bounded Outcomes
 #'
 #' @param m,M two real numbers defining the outcome range with `m`<`M`

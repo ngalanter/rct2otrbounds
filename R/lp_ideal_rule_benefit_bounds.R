@@ -174,7 +174,6 @@ helper_lp_benefit <- function(y_range,
                               mean_better,
                               var_worse,
                               var_better) {
-
   #get joint distribution of outcome values in both arms
   support <- expand.grid("y_w" = y_range, "y_b" = y_range)
 
@@ -244,7 +243,6 @@ helper_lp_ci <- function(y_range,
                          n_worse,
                          n_better,
                          level) {
-
   #get low and high quantiles for given confidence level
   q_low = 0.5 - level / 2
   q_high = 0.5 + level / 2
