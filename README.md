@@ -4,6 +4,9 @@
 # rct2otrbounds
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/ngalanter/rct2otrbounds/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ngalanter/rct2otrbounds?branch=master)
 <!-- badges: end -->
 
 The goal of rct2otrbounds is to …
