@@ -37,7 +37,13 @@ default is 0.95}
 The \code{level} upper confidence bound
 }
 \description{
-Helper Function to Calculate Linear Program Upper Confidence Bound on Ideal Rule Benefit
+Calculates a (likely conservative) level\% confidence bound on the ideal treatment rule benefit
+as the value of the solution to a linear programming problem over
+all possible joint distributions of Y^1,Y^0.
+The objective function is the treatment rule benefit, and the constraints are
+that all probabilities must add to 1 and be nonnegative, and that the joint distribution produces
+a mean and second absolute moment within the 95\% confidence intervals calculated
+in each arm based on the data.
 }
 \examples{
 #this is an internal function

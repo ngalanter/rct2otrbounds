@@ -1,5 +1,10 @@
 #' Helper Function to Transform Outcome
 #'
+#'Transforms outcome range and means. First, if original scale means lower outcomes are beneficial,
+#'     outcome scale is multiplied by -1. Then, once the scale is such that higher outcomes are beneficial,
+#'     the range is shifted to start at 0.
+#'     The intervals between possible values in the outcome range are not affected.
+#'
 #' @param y_range the range of outcomes
 #' @param mean_worse mean of the worse treatment arm
 #' @param mean_better mean of the better treatment arm
@@ -35,6 +40,20 @@ transform_range <- function(y_range,
 }
 
 #' Linear Programming Bound on the Ideal Rule Benefit
+#'
+#' Provides tight bounds on the benefit of the ideal treatment rule over the best uniform
+#'    treatment through linear programming. Also (optionally), provides an asymptotically
+#'    conservative upper confidence bound at the specified confidence level (95% is the default).
+#'
+#' The estimate is the value at the solution
+#'    to a linear programming problem over all possible joint distributions of Y^1,Y^0.
+#'    The objective function is the treatment rule benefit, and the constraints are
+#'    that all probabilities must add to 1 and be nonnegative, and that the joint distribution produces
+#'    the mean and variance in each arm observed from the data.
+#'
+#' The upper confidence bound solves a linear program with the same objective, except that the contraints
+#'     on the solution mean and variance are such that the solution must produce means and variances in each
+#'     arm within the 95% confidence interval calculated from the data.
 #'
 #' @param scale Scale should be "higher" (default) if higher outcomes are beneficial,
 #'     and "lower" otherwise
@@ -160,6 +179,13 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
 #' Helper Function to Calculate Linear Program Bound on Ideal Rule Benefit
 #'
+#'Calculates the estimated bound on the ideal treatment rule benefit as the value at the solution
+#'    to a linear programming problem over all possible joint distributions of Y^1,Y^0.
+#'    The objective function is the treatment rule benefit, and the constraints are
+#'    that all probabilities must add to 1 and be nonnegative, and that the joint distribution produces
+#'    the mean and variance in each arm observed from the data.
+#'
+#'
 #' @param y_range The range of possible outcomes, should be nonnegative
 #' @param mean_worse The estimated mean of the worse treatment
 #' @param mean_better The estimated mean of the better treatment
@@ -224,6 +250,15 @@ helper_lp_benefit <- function(y_range,
 }
 
 #' Helper Function to Calculate Linear Program Upper Confidence Bound on Ideal Rule Benefit
+#'
+#'Calculates a (likely conservative) level% confidence bound on the ideal treatment rule benefit
+#'    as the value of the solution to a linear programming problem over
+#'    all possible joint distributions of Y^1,Y^0.
+#'    The objective function is the treatment rule benefit, and the constraints are
+#'    that all probabilities must add to 1 and be nonnegative, and that the joint distribution produces
+#'    a mean and second absolute moment within the 95% confidence intervals calculated
+#'    in each arm based on the data.
+#'
 #'
 #' @param n_worse Sample size of worse treatment
 #' @param n_better Sample size of better treatment

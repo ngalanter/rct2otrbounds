@@ -21,7 +21,11 @@ helper_lp_benefit(y_range, mean_worse, mean_better, var_worse, var_better)
 the estimated benefit of the ideal treatment rule over the best uniform treatment
 }
 \description{
-Helper Function to Calculate Linear Program Bound on Ideal Rule Benefit
+Calculates the estimated bound on the ideal treatment rule benefit as the value at the solution
+to a linear programming problem over all possible joint distributions of Y^1,Y^0.
+The objective function is the treatment rule benefit, and the constraints are
+that all probabilities must add to 1 and be nonnegative, and that the joint distribution produces
+the mean and variance in each arm observed from the data.
 }
 \examples{
 #this is an internal function

@@ -19,7 +19,10 @@ transform_range(y_range, mean_worse, mean_better, scale)
 a list of the new range, new mean of the better arm, and new mean of the worse arm
 }
 \description{
-Helper Function to Transform Outcome
+Transforms outcome range and means. First, if original scale means lower outcomes are beneficial,
+outcome scale is multiplied by -1. Then, once the scale is such that higher outcomes are beneficial,
+the range is shifted to start at 0.
+The intervals between possible values in the outcome range are not affected.
 }
 \examples{
 #this is an internal function

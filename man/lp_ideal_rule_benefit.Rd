@@ -56,7 +56,20 @@ default is 0.95}
 }
 }
 \description{
-Linear Programming Bound on the Ideal Rule Benefit
+Provides tight bounds on the benefit of the ideal treatment rule over the best uniform
+treatment through linear programming. Also (optionally), provides an asymptotically
+conservative upper confidence bound at the specified confidence level (95\% is the default).
+}
+\details{
+The estimate is the value at the solution
+to a linear programming problem over all possible joint distributions of Y^1,Y^0.
+The objective function is the treatment rule benefit, and the constraints are
+that all probabilities must add to 1 and be nonnegative, and that the joint distribution produces
+the mean and variance in each arm observed from the data.
+
+The upper confidence bound solves a linear program with the same objective, except that the contraints
+on the solution mean and variance are such that the solution must produce means and variances in each
+arm within the 95\% confidence interval calculated from the data.
 }
 \examples{
 #tbc
