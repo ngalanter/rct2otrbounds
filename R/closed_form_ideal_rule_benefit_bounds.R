@@ -87,8 +87,10 @@ closed_form_ideal_rule_benefit <- function(s2_1,
           (max(abs(M),abs(m))*(s2_0+mean_0^2)+3*mean_0*s2_0+mean_0^3)*2*mean_delta*(1+nu_hat)/r_0
       )
 
+    q_high = 0.5 + level / 2
+
     #upper confidence bound at the specified level
-    ci.upper <- stats::qnorm(level, mean = point, sd = sqrt(var/n))
+    ci.upper <- stats::qnorm(q_high, mean = point, sd = sqrt(var/n))
 
   } else {ci.upper <- NULL}
 

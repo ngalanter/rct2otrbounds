@@ -3,4 +3,6 @@
 export(closed_form_ideal_rule_benefit)
 export(helper_lp_ci)
 export(lp_ideal_rule_benefit)
+export(plot_ideal_rule_benefits)
+export(subpop_ideal_rule_benefits)
 export(treatment_effect_heterogeneity_bound)
