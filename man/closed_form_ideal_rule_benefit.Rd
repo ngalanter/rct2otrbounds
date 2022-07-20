@@ -14,8 +14,9 @@ closed_form_ideal_rule_benefit(
   m = NULL,
   M = NULL,
   level = 0.95,
-  bounded_outcome = F,
-  conf.upper = F
+  bounded_outcome = FALSE,
+  binary_outcome = FALSE,
+  conf.upper = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ default is 0.95}
 
 \item{bounded_outcome}{logical; \code{TRUE} if the outcome is bounded and \code{FALSE} otherwise,
 default is \code{FALSE}}
+
+\item{binary_outcome}{logical; whether the outcome is binary}
 
 \item{conf.upper}{logical; whether a upper confidence bound should be provided}
 }
