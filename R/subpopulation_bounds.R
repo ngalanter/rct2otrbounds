@@ -143,12 +143,13 @@ plot_ideal_rule_benefits <- function(s2_1,
   s_prop <- seq(s_prop_low,s_prop_high, by = 0.05)
 
   dat <- data.frame(Benefit = c(temp$estimate,temp$conf.upper),
-                    Type = c(rep("Estimate",length(s_prop)),rep("Conf. Bound",length(s_prop))),
+                    Type = c(rep("Estimate",length(s_prop)),rep("Confidence Bound",length(s_prop))),
                     p = rep(s_prop,2))
 
   print(ggplot2::ggplot(data = dat, ggplot2::aes(x = .data$p,
                                            y = .data$Benefit,
                                            linetype = .data$Type)) +
+          ggplot2::scale_linetype_manual(breaks=c("Estimate","Confidence Bound"), values=c(1,2)) +
    ggplot2::geom_line(size = 1) +
   ggplot2::theme_bw() + ggplot2::theme(legend.position = "bottom") +
     ggplot2::labs(x = "Size of Sub-population",
