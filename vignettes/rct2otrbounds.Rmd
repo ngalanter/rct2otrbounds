@@ -18,6 +18,44 @@ knitr::opts_chunk$set(
 library(rct2otrbounds)
 ```
 
+Here we use the EMBARC trial (https://clinicaltrials.gov/ct2/show/NCT01407094) to demonstrate how this package can determine an upper limit on the benefit of using treatment rules instead of a treat everyone approach using clinical trial summary statistics. We focus on the initial phase of the trial, where subjects with early onset depression were randomized to either the antidepressant sertraline or a placebo. We use trial provided by the National Institute of Mental Health Data Archive, but summary data is also publicly available [here](https://clinicaltrials.gov/ct2/show/NCT01407094). There are minor differences in the summaries reported at the previous link and those we calculated from the full data. 
+
+We look at the outcome of the 36-question Hamilton Depression Scale at 8 weeks. Lower scores are beneficial on this scale and it ranges from 0 to 52 points. We first ignore that the outcome is bounded to demonstrate the functions available in this case.
+
+## Benefit Calculation for Unbounded Outcomes
+
+We first look at the upper and lower bounds on the treatment effect heterogeneity (variance of the treatment effect) possible given the means and standard deviations in each arm. Confidence intervals cannot be calculated for unbounded outcomes.
+
+```{r}
+treatment_effect_heterogeneity_bound(
+  s2_1 = 6.53^2,
+  s2_0 = 7.52^2,
+  mean_1 = 10.73,
+  mean_0 = 11.94,
+  bounded_outcome = FALSE,
+)
+
+
+```
+
+Next, we look at the upper bound on the benefit, in terms of reduction in Hamilton Score points, possible given the trial means and standard deviations. Again, no confidence intervals are possible.
+
+```{r}
+
+closed_form_ideal_rule_benefit(
+  s2_1 = 6.53^2,
+  s2_0 = 7.52^2,
+  mean_1 = 10.73,
+  mean_0 = 11.94,
+  bounded_outcome = FALSE,
+)
+
+```
+
+## Benefit Calculation for Bounded Outcomes
+
+We now incorporate the knowledge the the outcome lies within a bounded range. In this case, we can create asympotically conservative confidence intervals, and so we provide the sample size in each arm and the desired confidence level. 
+
 ```{r}
 treatment_effect_heterogeneity_bound(
   s2_1 = 6.53^2,
@@ -35,6 +73,8 @@ treatment_effect_heterogeneity_bound(
 
 
 ```
+
+
 
 ```{r}
 
@@ -54,6 +94,8 @@ closed_form_ideal_rule_benefit(
 
 ```
 
+In this case, the knowledge of the outcome range did not improve our closed form bounds. However, knowledge of the outcome range does allow us to create a tight bound on the treatment rule benefit using the linear programming method.
+
 ```{r}
 
 lp_ideal_rule_benefit(
@@ -71,6 +113,12 @@ lp_ideal_rule_benefit(
 )
 
 ```
+As we can see, the upper bound is lower, however the 95% upper confidence bound is higher. This is due to the fact that both the confidence intervals for both the closed form and linear programming methods are asymptotically conservative as opposed to providing the correct asymptotic coverage.
+
+
+## Calculating Benefits in a Sub-population
+
+If we believe there is some sub-population which contains all of the treatment effect heterogeneity, we can plot bounds on the treatment rule benefit in that sub-population depending on its size. First, we need to speculate on the treatment and control outcomes in that sub-population. Here, we assume that sub-population status is not itself a treatment effect modifier, and so it's means are the same as in the overall trial sample.  
 
 ```{r}
 
