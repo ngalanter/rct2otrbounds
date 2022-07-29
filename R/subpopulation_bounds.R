@@ -15,7 +15,40 @@
 #' * `estimate` the estimated benefit of the ideal treatment rule over the best uniform treatment
 #' * `conf.upper` The `level` upper confidence bound if `conf.upper` is TRUE, `NULL` otherwise
 #'
-#' @examples #tbd
+#' @examples
+#'
+#' #outcome is 1-5, variance 1 in each arm. treatment effect is 1
+#' #   100 people in each arm
+#' #   subpopulation has the same effect as the overall population
+#' subpop_ideal_rule_benefits(s2_1 = 1,
+#'                            s2_0 = 1,
+#'                            n_1 = 100,
+#'                            n_0 = 100,
+#'                            mean_1 = 3,
+#'                            mean_0 = 2,
+#'                            mean_1_s = 3,
+#'                            mean_0_s = 2,
+#'                            m = 1,
+#'                            M = 5,
+#'                            bounded_outcome = TRUE)
+#'
+#'
+#' #outcome is 1-5, variance 1 in each arm. treatment effect is 1, 100 people in each arm
+#' #   100 people in each arm
+#' #   subpopulation has no effect
+#' subpop_ideal_rule_benefits(s2_1 = 1,
+#'                            s2_0 = 1,
+#'                            n_1 = 100,
+#'                            n_0 = 100,
+#'                            mean_1 = 3,
+#'                            mean_0 = 2,
+#'                            mean_1_s = 2,
+#'                            mean_0_s = 2,
+#'                            m = 1,
+#'                            M = 5,
+#'                            bounded_outcome = TRUE)
+#'
+#'
 #'
 #' @export
 subpop_ideal_rule_benefits <- function(s2_1,
@@ -31,8 +64,8 @@ subpop_ideal_rule_benefits <- function(s2_1,
                                        m = NULL,
                                        M = NULL,
                                        level = 0.95,
-                                       bounded_outcome = F,
-                                       conf.upper = F)
+                                       bounded_outcome = FALSE,
+                                       conf.upper = FALSE)
 {
   #get x values
   s_prop <- seq(s_prop_low, s_prop_high, by = 0.05)
@@ -113,7 +146,38 @@ subpop_ideal_rule_benefits <- function(s2_1,
 #' * `conf.upper` The `level` upper confidence bound if `conf.upper` is TRUE, `NULL` otherwise
 #' @importFrom rlang .data
 #'
-#' @examples #tbc
+#' @examples
+#'
+#' #outcome is 1-5, variance 1 in each arm. treatment effect is 1,
+#' #   100 people in each arm
+#' #   subpopulation has the same effect as the overall population
+#' subpop_ideal_rule_benefits(s2_1 = 1,
+#'                            s2_0 = 1,
+#'                            n_1 = 100,
+#'                            n_0 = 100,
+#'                            mean_1 = 3,
+#'                            mean_0 = 2,
+#'                            mean_1_s = 3,
+#'                            mean_0_s = 2,
+#'                            m = 1,
+#'                            M = 5,
+#'                            bounded_outcome = TRUE)
+#'
+#'
+#' #outcome is 1-5, variance 1 in each arm. treatment effect is 1,
+#' #   100 people in each arm
+#' #   subpopulation has no effect
+#' subpop_ideal_rule_benefits(s2_1 = 1,
+#'                            s2_0 = 1,
+#'                            n_1 = 100,
+#'                            n_0 = 100,
+#'                            mean_1 = 3,
+#'                            mean_0 = 2,
+#'                            mean_1_s = 2,
+#'                            mean_0_s = 2,
+#'                            m = 1,
+#'                            M = 5,
+#'                            bounded_outcome = TRUE)
 #' @export
 plot_ideal_rule_benefits <- function(s2_1,
                                      s2_0,

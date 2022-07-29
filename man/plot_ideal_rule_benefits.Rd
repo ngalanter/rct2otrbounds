@@ -64,5 +64,35 @@ A list with two elements:
 Plot rule benefit bounds for subpopulation containing all treatment effect heterogeneity.
 }
 \examples{
-#tbc
+
+#outcome is 1-5, variance 1 in each arm. treatment effect is 1,
+#   100 people in each arm
+#   subpopulation has the same effect as the overall population
+subpop_ideal_rule_benefits(s2_1 = 1,
+                           s2_0 = 1,
+                           n_1 = 100,
+                           n_0 = 100,
+                           mean_1 = 3,
+                           mean_0 = 2,
+                           mean_1_s = 3,
+                           mean_0_s = 2,
+                           m = 1,
+                           M = 5,
+                           bounded_outcome = TRUE)
+
+
+#outcome is 1-5, variance 1 in each arm. treatment effect is 1,
+#   100 people in each arm
+#   subpopulation has no effect
+subpop_ideal_rule_benefits(s2_1 = 1,
+                           s2_0 = 1,
+                           n_1 = 100,
+                           n_0 = 100,
+                           mean_1 = 3,
+                           mean_0 = 2,
+                           mean_1_s = 2,
+                           mean_0_s = 2,
+                           m = 1,
+                           M = 5,
+                           bounded_outcome = TRUE)
 }

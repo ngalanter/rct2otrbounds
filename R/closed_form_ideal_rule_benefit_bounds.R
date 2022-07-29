@@ -12,11 +12,41 @@
 #' * `estimate` the estimated benefit of the ideal treatment rule over the best uniform treatment
 #' * `conf.upper` The `level` upper confidence bound if `conf.upper` is TRUE, `NULL` otherwise
 #'
-#' @examples #tbd
+#' @examples
+#' #outcome is 1-5, variance 1 in each arm. treatment effect is 1
+#' #   100 people in each arm
+#' closed_form_ideal_rule_benefit(s2_1 = 1,
+#'                                s2_0 = 1,
+#'                                n_1 = 100,
+#'                                n_0 = 100,
+#'                                mean_1 = 3,
+#'                                mean_0 = 2,
+#'                                m = 1,
+#'                                M = 5,
+#'                                bounded_outcome = TRUE,
+#'                                conf.upper = TRUE)
+#'
+#' #outcome is positive, variance 1 in each arm. treatment effect is 1
+#' #   100 people in each arm
+#' closed_form_ideal_rule_benefit(s2_1 = 1,
+#'                                s2_0 = 1,
+#'                                n_1 = 100,
+#'                                n_0 = 100,
+#'                                mean_1 = 3,
+#'                                mean_0 = 2)
+#'
+#' #outcome is binary, treatment effect is 0.3
+#' #   100 people in each arm
+#' closed_form_ideal_rule_benefit(n_1 = 100,
+#'                                n_0 = 100,
+#'                                mean_1 = 0.4,
+#'                                mean_0 = 0.7,
+#'                                conf.upper = TRUE,
+#'                                binary_outcome = TRUE)
 #'
 #' @export
-closed_form_ideal_rule_benefit <- function(s2_1,
-                                           s2_0,
+closed_form_ideal_rule_benefit <- function(s2_1 = NULL,
+                                           s2_0 = NULL,
                                            n_1 = NULL,
                                            n_0 = NULL,
                                            mean_1,
@@ -40,6 +70,11 @@ closed_form_ideal_rule_benefit <- function(s2_1,
     }
 
   } else { #otherwise return bounded or general bound
+
+    if(is.null(s2_1) | is.null(s2_0)){
+      stop("For non-binary outcomes, must provide variance in each arm.")
+    }
+
     if (bounded_outcome) {
       if (is.null(m) | is.null(M)) {
         stop("For bounded outcomes, bounds must be given by the m and M arguments")

@@ -5,8 +5,8 @@
 \title{General Closed Form Ideal Rule Benefit Bound}
 \usage{
 closed_form_ideal_rule_benefit(
-  s2_1,
-  s2_0,
+  s2_1 = NULL,
+  s2_0 = NULL,
   n_1 = NULL,
   n_0 = NULL,
   mean_1,
@@ -55,6 +55,35 @@ A list with two elements:
 General Closed Form Ideal Rule Benefit Bound
 }
 \examples{
-#tbd
+#outcome is 1-5, variance 1 in each arm. treatment effect is 1
+#   100 people in each arm
+closed_form_ideal_rule_benefit(s2_1 = 1,
+                               s2_0 = 1,
+                               n_1 = 100,
+                               n_0 = 100,
+                               mean_1 = 3,
+                               mean_0 = 2,
+                               m = 1,
+                               M = 5,
+                               bounded_outcome = TRUE,
+                               conf.upper = TRUE)
+
+#outcome is positive, variance 1 in each arm. treatment effect is 1
+#   100 people in each arm
+closed_form_ideal_rule_benefit(s2_1 = 1,
+                               s2_0 = 1,
+                               n_1 = 100,
+                               n_0 = 100,
+                               mean_1 = 3,
+                               mean_0 = 2)
+
+#outcome is binary, treatment effect is 0.3
+#   100 people in each arm
+closed_form_ideal_rule_benefit(n_1 = 100,
+                               n_0 = 100,
+                               mean_1 = 0.4,
+                               mean_0 = 0.7,
+                               conf.upper = TRUE,
+                               binary_outcome = TRUE)
 
 }
