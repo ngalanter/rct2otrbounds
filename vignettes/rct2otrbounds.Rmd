@@ -115,6 +115,23 @@ lp_ideal_rule_benefit(
 ```
 As we can see, the upper bound is lower, however the 95% upper confidence bound is higher. This is due to the fact that both the confidence intervals for both the closed form and linear programming methods are asymptotically conservative as opposed to providing the correct asymptotic coverage.
 
+## Benefit Calculation for Binary Outcomes
+
+For this example we use fabricated data. Suppose that a study similar to EMBARC measured a binary outcome on whether symptom scores improved by a certain number of points by the end of the study. The sample sizes in each arm are the same as in the EMBARC trial. We can calculate a tight bound on the benefit of a treatment rule and an asymptotically conservative confidence interval as shown below.
+
+```{r}
+
+closed_form_ideal_rule_benefit(
+  n_1 = 114,
+  n_0 = 126,
+  mean_1 = 0.63,
+  mean_0 = 0.54,
+  level = 0.95,
+  binary_outcome = TRUE,
+  conf.upper = TRUE
+)
+
+```
 
 ## Calculating Benefits in a Sub-population
 
