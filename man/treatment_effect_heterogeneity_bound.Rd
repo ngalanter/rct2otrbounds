@@ -14,7 +14,7 @@ treatment_effect_heterogeneity_bound(
   m = NULL,
   M = NULL,
   level = 0.95,
-  bounded_outcome = F,
+  bounded_outcome = FALSE,
   conf.int = FALSE
 )
 }
@@ -54,6 +54,22 @@ for bounded outcomes when the \code{conf.int} argument is set to TRUE
 General Closed Form Treatment Effect Heterogeneity Bound
 }
 \examples{
-#tbd
+
+#outcome is 1-5, variance 1 in each arm. treatment effect is 1
+#   100 people in each arm
+treatment_effect_heterogeneity_bound(s2_1 = 1,
+                                     s2_0 = 1,
+                                     n_1 = 100,
+                                     n_0 = 100,
+                                     mean_1 = 3,
+                                     mean_0 = 2,
+                                     m = 1,
+                                     M = 5,
+                                     conf.int = TRUE,
+                                     bounded_outcome = TRUE)
+
+#outcome is positive, variance 1 in each arm
+treatment_effect_heterogeneity_bound(s2_1 = 1,
+                                     s2_0 = 1)
 
 }

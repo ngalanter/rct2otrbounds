@@ -72,6 +72,42 @@ on the solution mean and variance are such that the solution must produce means 
 arm within the 95\% confidence interval calculated from the data.
 }
 \examples{
-#tbc
+
+#outcome is 1-5, variance 1 in each arm. treatment effect is 1
+#   100 people in each arm
+#   higher outcomes better
+lp_ideal_rule_benefit(s2_1 = 1,
+                      s2_0 = 1,
+                      n_1 = 100,
+                      n_0 = 100,
+                      mean_1 = 3,
+                      mean_0 = 2,
+                      m = 1,
+                      M = 5,
+                      conf.upper = TRUE)
+
+#outcome is 1-5, variance 1 in each arm. treatment effect is 1
+#   100 people in each arm
+#   lower outcomes better
+lp_ideal_rule_benefit(s2_1 = 1,
+                      s2_0 = 1,
+                      n_1 = 100,
+                      n_0 = 100,
+                      mean_1 = 2,
+                      mean_0 = 3,
+                      m = 1,
+                      M = 5,
+                      scale = "lower",
+                      conf.upper = TRUE)
+
+#outcome range is (1,3,5,6,7,8,9,10)
+lp_ideal_rule_benefit(s2_1 = 1,
+                      s2_0 = 1,
+                      n_1 = 100,
+                      n_0 = 100,
+                      mean_1 = 3,
+                      mean_0 = 2,
+                      y_range = c(1,3,5,6,7,8,9,10),
+                      conf.upper = TRUE)
 
 }

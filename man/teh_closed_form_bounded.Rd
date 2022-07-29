@@ -50,6 +50,6 @@ for bounded outcomes when the \code{conf.int} argument is set to TRUE
 Closed Form Treatment Effect Heterogeneity Bound for Bounded Outcomes
 }
 \examples{
-#tbd
+#internal function
 
 }

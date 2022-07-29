@@ -18,6 +18,6 @@ A a vector with the lower bound on treatment effect variance followed by the upp
 Closed Form Treatment Effect Heterogeneity Bound for Unbounded Outcomes
 }
 \examples{
-#tbd
+#internal function
 
 }

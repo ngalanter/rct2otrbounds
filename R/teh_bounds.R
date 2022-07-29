@@ -21,7 +21,7 @@
 #'     treatment effect heterogeneity
 #' * `conf.int` a two element vector of the `level` confidence interval around the bounds,
 #'     for bounded outcomes when the `conf.int` argument is set to TRUE
-#' @examples #tbd
+#' @examples #internal function
 #'
 teh_closed_form_bounded <-
   function(m,
@@ -105,7 +105,7 @@ teh_closed_form_bounded <-
 #' @returns
 #' A a vector with the lower bound on treatment effect variance followed by the upper bound
 #'
-#' @examples #tbd
+#' @examples #internal function
 #'
 teh_closed_form_unbounded <- function(s2_1, s2_0) {
   #sample variance ratio of treatment to control arm
@@ -135,7 +135,24 @@ teh_closed_form_unbounded <- function(s2_1, s2_0) {
 #' * `conf.int` a two element vector of the `level` confidence interval around the bounds,
 #'     for bounded outcomes when the `conf.int` argument is set to TRUE
 #'
-#' @examples #tbd
+#' @examples
+#'
+#' #outcome is 1-5, variance 1 in each arm. treatment effect is 1
+#' #   100 people in each arm
+#' treatment_effect_heterogeneity_bound(s2_1 = 1,
+#'                                      s2_0 = 1,
+#'                                      n_1 = 100,
+#'                                      n_0 = 100,
+#'                                      mean_1 = 3,
+#'                                      mean_0 = 2,
+#'                                      m = 1,
+#'                                      M = 5,
+#'                                      conf.int = TRUE,
+#'                                      bounded_outcome = TRUE)
+#'
+#' #outcome is positive, variance 1 in each arm
+#' treatment_effect_heterogeneity_bound(s2_1 = 1,
+#'                                      s2_0 = 1)
 #'
 #' @export
 treatment_effect_heterogeneity_bound <- function(s2_1,
@@ -147,7 +164,7 @@ treatment_effect_heterogeneity_bound <- function(s2_1,
                                                  m = NULL,
                                                  M = NULL,
                                                  level = 0.95,
-                                                 bounded_outcome = F,
+                                                 bounded_outcome = FALSE,
                                                  conf.int = FALSE)
 {
   if (bounded_outcome) {
