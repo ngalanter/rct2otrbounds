@@ -136,16 +136,20 @@ closed_form_ideal_rule_benefit <- function(s2_1 = NULL,
 
     #bound on the variance of the point estimate
     var <-
-      (16 * (s2_0 * (nu_hat + 1) ^ 2 + mean_delta ^ 2)) ^ (-1) *
-      (
-        (max_sqdev_1 * s2_1 - s2_1 ^ 2) * (nu_hat ^ (-1) + 1) ^ 2 / r_1 +
-          (max_sqdev_0 * s2_0 - s2_0 ^ 2) * (nu_hat + 1) ^ 2 / r_0 +
-          4 * (s2_1 / r_1 + s2_0 / r_0) * mean_delta ^ 2 +
-          (max(abs(M), abs(m)) * (s2_1 + mean_1 ^ 2) - 3 * mean_1 * s2_1 -
-             mean_1 ^ 3) * 2 * mean_delta * (1 + nu_hat ^ (-1)) / r_1 +
-          (max(abs(M), abs(m)) * (s2_0 + mean_0 ^ 2) + 3 * mean_0 * s2_0 +
-             mean_0 ^ 3) * 2 * mean_delta * (1 + nu_hat) / r_0
-      )
+      (16 *
+         (s2_0 * (nu_hat + 1) ^ 2 + mean_delta ^ 2)) ^ (-1) * (
+           (max_sqdev_1 * s2_1 / r_1 - s2_1 ^ 2) * (nu_hat ^ (-1) + 1) ^ 2  +
+             (max_sqdev_0 * s2_0 / r_0 - s2_0 ^ 2) * (nu_hat + 1) ^ 2  +
+             4 * ((s2_1+mean_1^2)/r_1+(s2_0+mean_0^2)/r_0-mean_delta ^ 2) * mean_delta ^ 2 +
+             (
+               (max(abs(M), abs(m)) * (s2_1 + mean_1 ^ 2) - 2 * mean_1 * s2_1 -
+                mean_1 ^ 3)/ r_1 - mean_delta * s2_1
+               ) * 4 * mean_delta * (1 + nu_hat ^ (-1))  +
+             (
+               (max(abs(M), abs(m)) * (s2_0 + mean_0 ^ 2) + 2 * mean_0 * s2_0 +
+                  mean_0 ^ 3)/ r_0 - mean_delta * s2_0
+             ) * 4 * mean_delta * (1 + nu_hat)
+         )
 
     q_high = 0.5 + level / 2
 
