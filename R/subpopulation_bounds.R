@@ -1,4 +1,4 @@
-#' Plot rule benefit bounds for subpopulation containing all treatment effect heterogeneity.
+#' get benefit bounds for subpopulation containing all treatment effect heterogeneity.
 #'
 #' @param bounded_outcome logical; `TRUE` if the outcome is bounded and `FALSE` otherwise,
 #'     default is `FALSE`
@@ -131,7 +131,7 @@ subpop_ideal_rule_benefits <- function(s2_1,
   ci.upper <-
     stats::qnorm(q_high, mean = estimates, sd = sqrt(var / n))
 
-  return(list(estimates = estimates, conf.upper = ci.upper))
+  return(list(estimates = estimates, conf.upper = ci.upper, props = s_prop))
 
 }
 
@@ -213,7 +213,7 @@ plot_ideal_rule_benefits <- function(s2_1,
   )
 
   #get x values
-  s_prop <- seq(s_prop_low, s_prop_high, by = 0.05)
+  s_prop <- temp$props
 
   dat <- data.frame(
     Benefit = c(temp$estimate, temp$conf.upper),
