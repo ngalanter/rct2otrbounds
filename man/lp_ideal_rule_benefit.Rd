@@ -15,7 +15,7 @@ lp_ideal_rule_benefit(
   n_1 = NULL,
   n_0 = NULL,
   scale = "higher",
-  conf.upper = FALSE,
+  conf.int = FALSE,
   level = 0.95
 )
 }
@@ -43,7 +43,7 @@ if m,M are specified this should be left as \code{NULL}}
 \item{scale}{Scale should be "higher" (default) if higher outcomes are beneficial,
 and "lower" otherwise}
 
-\item{conf.upper}{logical; whether a upper confidence bound should be provided}
+\item{conf.int}{logical; whether a upper confidence interval should be provided}
 
 \item{level}{confidence level between 0 and 1 for confidence interval;
 default is 0.95}
@@ -52,7 +52,7 @@ default is 0.95}
 #' A list with two elements:
 \itemize{
 \item \code{estimate} the estimated benefit of the ideal treatment rule over the best uniform treatment
-\item \code{conf.upper} The \code{level} upper confidence bound if \code{conf.upper} is TRUE, \code{NULL} otherwise
+\item \code{conf.int} The \code{level} confidence interval if \code{conf.int} is TRUE, \code{NULL} otherwise
 }
 }
 \description{
@@ -84,7 +84,7 @@ lp_ideal_rule_benefit(s2_1 = 1,
                       mean_0 = 2,
                       m = 1,
                       M = 5,
-                      conf.upper = TRUE)
+                      conf.int = TRUE)
 
 #outcome is 1-5, variance 1 in each arm. treatment effect is 1
 #   100 people in each arm
@@ -98,7 +98,7 @@ lp_ideal_rule_benefit(s2_1 = 1,
                       m = 1,
                       M = 5,
                       scale = "lower",
-                      conf.upper = TRUE)
+                      conf.int = TRUE)
 
 #outcome range is (1,3,5,6,7,8,9,10)
 lp_ideal_rule_benefit(s2_1 = 1,
@@ -108,6 +108,6 @@ lp_ideal_rule_benefit(s2_1 = 1,
                       mean_1 = 3,
                       mean_0 = 2,
                       y_range = c(1,3,5,6,7,8,9,10),
-                      conf.upper = TRUE)
+                      conf.int = TRUE)
 
 }

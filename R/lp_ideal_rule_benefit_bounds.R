@@ -57,7 +57,7 @@ transform_range <- function(y_range,
 #'
 #' @param scale Scale should be "higher" (default) if higher outcomes are beneficial,
 #'     and "lower" otherwise
-#' @param conf.upper logical; whether a upper confidence bound should be provided
+#' @param conf.int logical; whether a upper confidence interval should be provided
 #' @param y_range the range of possible outcome values. either this or both m and M should be specified
 #'    if m,M are specified this should be left as `NULL`
 #' @param m,M the upper and lower bounds on the outcome range.
@@ -71,7 +71,7 @@ transform_range <- function(y_range,
 #' #' A list with two elements:
 #'
 #' * `estimate` the estimated benefit of the ideal treatment rule over the best uniform treatment
-#' * `conf.upper` The `level` upper confidence bound if `conf.upper` is TRUE, `NULL` otherwise
+#' * `conf.int` The `level` confidence interval if `conf.int` is TRUE, `NULL` otherwise
 #'
 #' @examples
 #'
@@ -86,7 +86,7 @@ transform_range <- function(y_range,
 #'                       mean_0 = 2,
 #'                       m = 1,
 #'                       M = 5,
-#'                       conf.upper = TRUE)
+#'                       conf.int = TRUE)
 #'
 #' #outcome is 1-5, variance 1 in each arm. treatment effect is 1
 #' #   100 people in each arm
@@ -100,7 +100,7 @@ transform_range <- function(y_range,
 #'                       m = 1,
 #'                       M = 5,
 #'                       scale = "lower",
-#'                       conf.upper = TRUE)
+#'                       conf.int = TRUE)
 #'
 #' #outcome range is (1,3,5,6,7,8,9,10)
 #' lp_ideal_rule_benefit(s2_1 = 1,
@@ -110,7 +110,7 @@ transform_range <- function(y_range,
 #'                       mean_1 = 3,
 #'                       mean_0 = 2,
 #'                       y_range = c(1,3,5,6,7,8,9,10),
-#'                       conf.upper = TRUE)
+#'                       conf.int = TRUE)
 #'
 #' @export
 lp_ideal_rule_benefit <- function(m = NULL,
@@ -123,7 +123,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
                                   n_1 = NULL,
                                   n_0 = NULL,
                                   scale = "higher",
-                                  conf.upper = FALSE,
+                                  conf.int = FALSE,
                                   level = 0.95)
 {
   if ((is.null(m) | is.null(M)) & is.null(y_range)) {
@@ -179,14 +179,14 @@ lp_ideal_rule_benefit <- function(m = NULL,
   new_mean_better <- temp$new_mean_better
 
 
-  if (conf.upper) {
+  if (conf.int) {
     if (is.null(n_1) | is.null(n_0)) {
       stop("Values for n_1 and n_0 are required to form confidence intervals.")
 
     }
 
-    #get upper confidence bound
-    ci.upper <- helper_lp_ci(
+    #get confidence interval
+    ci.int <- helper_lp_ci(
       y_range = new_y_range,
       new_mean_worse,
       new_mean_better,
@@ -199,7 +199,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
 
 
   } else {
-    ci.upper <- NULL
+    ci.int <- NULL
   }
 
   #get bound estimate
@@ -209,7 +209,7 @@ lp_ideal_rule_benefit <- function(m = NULL,
                              var_worse,
                              var_better)
 
-  return(list(estimate = bound, conf.upper = ci.upper))
+  return(list(estimate = bound, conf.int = ci.int))
 
 
 }
@@ -274,7 +274,15 @@ helper_lp_benefit <- function(y_range,
 
   #solvea the linear programming problem
   #   returns the max value of the objective
-  return(
+  return(c(
+    lpSolve::lp(
+      direction = "min",
+      objective.in = objective.in,
+      const.mat = const.mat,
+      const.dir = const.dir,
+      const.rhs = const.rhs
+    )$objval
+    ,
     lpSolve::lp(
       direction = "max",
       objective.in = objective.in,
@@ -282,7 +290,7 @@ helper_lp_benefit <- function(y_range,
       const.dir = const.dir,
       const.rhs = const.rhs
     )$objval
-  )
+  ))
 
 }
 
@@ -397,12 +405,22 @@ helper_lp_ci <- function(y_range,
 
   #solvea the linear programming problem
   #   returns the max value of the objective
-  lpSolve::lp(
-    direction = "max",
-    objective.in = objective.in,
-    const.mat = const.mat,
-    const.dir = const.dir,
-    const.rhs = const.rhs
-  )
+
+  return(c(
+    lpSolve::lp(
+      direction = "min",
+      objective.in = objective.in,
+      const.mat = const.mat,
+      const.dir = const.dir,
+      const.rhs = const.rhs
+    )$objval,
+    lpSolve::lp(
+      direction = "max",
+      objective.in = objective.in,
+      const.mat = const.mat,
+      const.dir = const.dir,
+      const.rhs = const.rhs
+    )$objval
+  ))
 
 }

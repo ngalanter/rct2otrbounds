@@ -108,12 +108,12 @@ lp_ideal_rule_benefit(
   m = 0,
   M = 52,
   level = 0.95,
-  conf.upper = TRUE,
+  conf.int = TRUE,
   scale = "lower"
 )
 
 ```
-As we can see, the upper bound is lower, however the 95% upper confidence bound is higher. This is due to the fact that both the confidence intervals for both the closed form and linear programming methods are asymptotically conservative as opposed to providing the correct asymptotic coverage.
+As we can see, the upper bound with the linear programming method is lower than with the closed form method, however the 95% upper confidence bound is higher. This is due to the fact that both the confidence intervals for both the closed form and linear programming methods are asymptotically conservative as opposed to providing the correct asymptotic coverage. The lower bound on the benefit of the optimal treatment rule is 0, meaning that given the observed trial results it is possible that individualized treatment has no benefit.
 
 ## Benefit Calculation for Binary Outcomes
 
