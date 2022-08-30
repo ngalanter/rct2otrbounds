@@ -424,3 +424,125 @@ helper_lp_ci <- function(y_range,
   ))
 
 }
+
+#' Linear programming rule benefit bounds with stratification variable
+#'
+#' @param m The lowest possible outcome value
+#' @param M The highest possible outcome value
+#' @param y_range The range of outcomes
+#' @param s2_1 The vector of variances in arm 1 from each stratum
+#' @param s2_0 The vector of variances in arm 0 from each stratum
+#' @param mean_1 The vector of means in arm 1 from each stratum
+#' @param mean_0 The vector of means in arm 0 from each stratum
+#' @param strata_props The vector of proportions of each stratum in the population
+#' @param scale Scale should be "higher" (default) if higher outcomes are beneficial,
+#'     and "lower" otherwise
+#'
+#' @return A length 2 vector of the lower and upper bounds on treatment rule benefit
+#' @export
+#'
+#' @examples #TBC
+strata_lp_ideal_rule_benefit <- function(m = NULL,
+                                         M = NULL,
+                                         y_range = NULL,
+                                         s2_1,
+                                         s2_0,
+                                         mean_1,
+                                         mean_0,
+                                         strata_props,
+                                         scale = "higher"){
+
+  if ((is.null(m) | is.null(M)) & is.null(y_range)) {
+    stop("Either the y_range or both m and M must be specified")
+  }
+
+  if ((!is.null(m) | !is.null(M)) & !is.null(y_range)) {
+    stop("Only y_range or m,M can be specified")
+  }
+
+  if (!(scale %in% c("higher", "lower")))
+    stop ("scale must be 'higher' or 'lower'")
+
+  if(!(length(s2_1)==length(s2_0) &
+       length(s2_1)==length(mean_1) &
+       length(s2_1)==length(mean_0))){
+    stop("Length of all mean, variance, and strata proportions vector must be the same.")
+  }
+
+  if(sum(strata_props) != 1 | sum(strata_props < 0) != 0 | sum(strata_props > 1) != 0){
+    stop ("Strata proportions must be between 0 and 1 and sum to 1.")
+  }
+
+
+  if (!(is.null(m) | is.null(M))) {
+    if (m >= M)
+      stop("m must be less than M")
+
+    #if lower and upper bounds are specified, create range based on those
+    y_range <- m:M
+
+  }
+
+  #get the number of strata
+  n_strata <- length(mean_1)
+
+  mean_worse <- rep(NA,n_strata)
+  mean_bettter <- mean_worse
+  var_worse <- mean_worse
+  var_better <- mean_bettter
+
+
+  for(i in 1:n_strata){
+
+    #assign which arms are worse or better based on scale
+    if ((scale == "lower" &
+         mean_1[i] <= mean_0[i]) | (scale == "higher" & mean_1[i] >= mean_0[i])) {
+      mean_better[i] <- mean_1[i]
+      var_better[i] <- s2_1[i]
+
+      mean_worse[i] <- mean_0[i]
+      var_worse[i] <- s2_0[i]
+
+    } else {
+      mean_better[i] <- mean_0[i]
+      var_better[i] <- s2_0[i]
+
+      mean_worse[i] <- mean_1[i]
+      var_worse[i] <- s2_1[i]
+
+    }
+  }
+
+
+  temp <- transform_range (y_range,
+                           mean_worse,
+                           mean_better,
+                           scale)
+
+  new_y_range <- temp$new_y_range
+  new_mean_worse <- temp$new_mean_worse
+  new_mean_better <- temp$new_mean_better
+
+  #get bounds on further benefit beyond strata based rule
+
+  further_benefit <- matrix(NA,nrow = n_strata,ncol = 2)
+
+  for(i in 1:n_strata){
+
+    further_benefit[i,] <- helper_lp_benefit(y_range = new_y_range,
+                                             new_mean_worse,
+                                             new_mean_better,
+                                             var_worse,
+                                             var_better)
+
+  }
+
+  uniform_value <- abs(strata_props %*% mean_1 - strata_props %*% mean_0)
+
+  strata_rule_benefit <- - strata_props %*% new_mean_better - uniform_value
+
+  further_benefit_total <- strata_props %*% further_benefit
+
+  return(strata_rule_benefit + further_benefit_total)
+
+}
