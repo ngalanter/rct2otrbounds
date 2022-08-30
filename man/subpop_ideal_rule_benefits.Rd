@@ -2,7 +2,7 @@
 % Please edit documentation in R/subpopulation_bounds.R
 \name{subpop_ideal_rule_benefits}
 \alias{subpop_ideal_rule_benefits}
-\title{Plot rule benefit bounds for subpopulation containing all treatment effect heterogeneity.}
+\title{get benefit bounds for subpopulation containing all treatment effect heterogeneity.}
 \usage{
 subpop_ideal_rule_benefits(
   s2_1,
@@ -61,7 +61,7 @@ A list with two elements:
 }
 }
 \description{
-Plot rule benefit bounds for subpopulation containing all treatment effect heterogeneity.
+get benefit bounds for subpopulation containing all treatment effect heterogeneity.
 }
 \examples{
 
