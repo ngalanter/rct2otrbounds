@@ -487,10 +487,22 @@ strata_lp_ideal_rule_benefit <- function(m = NULL,
   n_strata <- length(mean_1)
 
   mean_worse <- rep(NA,n_strata)
-  mean_bettter <- mean_worse
+  mean_better <- mean_worse
   var_worse <- mean_worse
-  var_better <- mean_bettter
+  var_better <- mean_better
 
+
+  if ((scale == "lower" &
+       strata_props %*% mean_1 <= strata_props %*% mean_0) |
+      (scale == "higher" & strata_props %*% mean_1 >= strata_props %*% mean_0)) {
+    overall_mean_better <- strata_props %*% mean_1
+    overall_mean_worse <- strata_props %*% mean_0
+
+  } else {
+    overall_mean_better <- strata_props %*% mean_0
+    overall_mean_worse <- strata_props %*% mean_1
+
+  }
 
   for(i in 1:n_strata){
 
@@ -530,19 +542,30 @@ strata_lp_ideal_rule_benefit <- function(m = NULL,
   for(i in 1:n_strata){
 
     further_benefit[i,] <- helper_lp_benefit(y_range = new_y_range,
-                                             new_mean_worse,
-                                             new_mean_better,
-                                             var_worse,
-                                             var_better)
+                                             new_mean_worse[i],
+                                             new_mean_better[i],
+                                             var_worse[i],
+                                             var_better[i])
 
   }
 
-  uniform_value <- abs(strata_props %*% mean_1 - strata_props %*% mean_0)
 
-  strata_rule_benefit <- - strata_props %*% new_mean_better - uniform_value
+  if (scale == "lower") {
+    uniform_value <- max(y_range) - overall_mean_better
 
-  further_benefit_total <- strata_props %*% further_benefit
+  } else{
+    uniform_value  <- overall_mean_better - min(y_range)
 
-  return(strata_rule_benefit + further_benefit_total)
+  }
+
+  browser()
+
+
+  strata_rule_benefit <- round(strata_props %*% new_mean_better -
+                                             uniform_value,10)
+
+  further_benefit_total <- as.vector(strata_props %*% further_benefit)
+
+  return(c(strata_rule_benefit) + further_benefit_total)
 
 }
