@@ -65,17 +65,17 @@ teh_closed_form_bounded <-
 
       #upper bound on the variance of general lower bound on teh
       var_low <-
-        (max((m - mean_1) ^ 2, (M - mean_1) ^ 2) * s2_1 - s2_1 ^ 2) * (1 / nu_hat - 1) ^
-        2 / r_1 +
-        (max((m - mean_0) ^ 2, (M - mean_0) ^ 2) * s2_0 - s2_0 ^ 2) * (nu_hat - 1) ^
-        2 / r_0
+        (max((m - mean_1) ^ 2, (M - mean_1) ^ 2) * s2_1 / r_1 - s2_1 ^ 2) * (1 / nu_hat - 1) ^
+        2 +
+        (max((m - mean_0) ^ 2, (M - mean_0) ^ 2) * s2_0 / r_0 - s2_0 ^ 2) * (nu_hat - 1) ^
+        2
 
       #upper bound on the variance of general upper bound on teh
       var_high <-
-        (max((m - mean_1) ^ 2, (M - mean_1) ^ 2) * s2_1 - s2_1 ^ 2) * (1 / nu_hat + 1) ^
-        2 / r_1 +
-        (max((m - mean_0) ^ 2, (M - mean_0) ^ 2) * s2_0 - s2_0 ^ 2) * (nu_hat + 1) ^
-        2 / r_0
+        (max((m - mean_1) ^ 2, (M - mean_1) ^ 2) * s2_1 / r_1 - s2_1 ^ 2) * (1 / nu_hat + 1) ^
+        2 +
+        (max((m - mean_0) ^ 2, (M - mean_0) ^ 2) * s2_0 / r_0 - s2_0 ^ 2) * (nu_hat + 1) ^
+        2
 
       #lower confidence interval limit for the bounds
       ci_low <-
