@@ -3,12 +3,6 @@
 
 # rct2otrbounds
 
-<!-- badges: start -->
-
-[![Codecov test
-coverage](https://codecov.io/gh/ngalanter/rct2otrbounds/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ngalanter/rct2otrbounds?branch=master)
-<!-- badges: end -->
-
 The goal of rct2otrbounds is to provide functions which use two arm
 randomized trial summary statistics to upper bound the maximum expected
 benefit of implementing a treatment rule as opposed to treating
